@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ToDo List</title>
+    <link rel="stylesheet" type="text/css" href="CSS/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="CSS/dataTables.bootstrap5.min.css" />
+    <!-- javascript Start-->
+    <script type="text/javascript" src="JS/jquery.js"></script>
+    <script type="text/javascript" src="JS/bootstrap.bundle.min.js"></script>
+    <script type="text/javascript" src="JS/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="JS/dataTables.bootstrap5.min.js"></script>
+    <script type="text/javascript" src="JS/app.js"></script>
+    <!-- javascript End-->
+  </head>
+  <body>
+    <!-- Alerts Start : alert message content is added dynamically-->
+    <div class="alert alert-success" data-alert="alert" id="task-list-alert-sucess">
+      
+    </div>
+    <div class="alert alert-danger" data-alert="alert" id="task-list-alert-fail">
+      
+    </div>
+    <!-- Alerts End-->
+
+    <!--Modal with "modify" task form, poped up when modify button is pressed -->
+    <div class="modal" tabindex="-1" role="dialog" id="modify-task-modal">
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modify task</h5>
+            <button type="button" class="close modify-task-modal-close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="modify-task-form">
+              <div class="form-group row pt-2">
+                <label for="modify-task-form" class="col-sm-2 col-form-label">Modify title</label>
+                <div class="col-sm-10">
+                  <input id="modify-title" class="form-control" type="text" name="task-title" />
+                </div>
+              </div>
+              <div class="form-group row pt-2 date">
+                <label for="modify-task-form" class="col-sm-2 col-form-label">Modify deadline</label>
+                <div class="col-sm-10">
+                  <input id="modify-deadline" class="form-control" type="datetime-local" name="task-deadline" />
+                </div>
+              </div>
+              <div class="form-group row pt-2">
+                <label for="modify-task-form" class="col-sm-2 col-form-label">Comments/Notes</label>
+                <div class="col-sm-10">
+                  <input id="modify-comments" class="form-control" type="text" name="task-comments" />
+                </div>
+              </div>
+              <div class="form-group row pt-2">
+                <div class="col-sm-10">
+                  <input id="modify-creation" class="form-control" type="hidden" name="task-creation" />
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary modify-task-modal-close">Cancel</button>
+            <button id="modify_btn" type="button" class="btn btn-primary" data-dismiss="modal">Modify</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Modal End-->
+
+    <div class="container pt-5">
+      <div class="row align-items-center">
+        <div class="col-12 mx-auto">
+          <div class="card shadow border">
+            <div class="card-header" style="
+                background-color: #036a63;
+                font-size: 24px;
+                color: aliceblue;
+              "> Task tracker </div>
+            <div class="card-body">
+              <div class="card text-center">
+                <div class="card-header">
+                  <ul class="nav nav-tabs card-header-tabs" id="myTab">
+                    <li class="nav-item">
+                      <a href="#alltasks" id="alltask-tab" class="nav-link active" data-bs-toggle="tab">All tasks</a>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#addnewtask" class="nav-link" data-bs-toggle="tab">Add new task</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="card-body">
+                  <div class="tab-content">
+                    <div class="tab-pane fade show active" id="alltasks">
+                      <h5 class="card-title">List of all tasks</h5>
+                      <div class="table-responsive">
+                        <table id="task-table" class="display table" width="100%">
+                          <thead>
+                            <tr>
+                              <th scope="col">#</th>
+                              <th scope="col">Title</th>
+                              <th scope="col">Deadline</th>
+                              <th scope="col">Comments</th>
+                              <th scope="col">Added on</th>
+                              <th scope="col">Modify</th>
+                              <th scope="col">Delete</th>
+                            </tr>
+                          </thead>
+                          <tbody></tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="addnewtask">
+                      <h5 class="card-title">Add new TODO task</h5>
+                      <form id="add-task-form">
+                        <div class="form-group row pt-2">
+                          <label for="add-task-form" class="col-sm-2 col-form-label">Task title</label>
+                          <div class="col-sm-10">
+                            <input type="text" name="task-title" class="form-control" id="task-title" placeholder="Enter your task title" required />
+                          </div>
+                        </div>
+                        <div class="form-group row pt-2 date">
+                          <label for="add-task-form" class="col-sm-2 col-form-label">Deadline</label>
+                          <div class="col-sm-10">
+                            <input type="datetime-local" name="task-deadline" class="form-control input-group-sm" id="task-deadline" placeholder="What is the Deadline?" required />
+                          </div>
+                        </div>
+                        <div class="form-group row pt-2">
+                          <label for="input-lg" class="col-sm-2 col-form-label">Comments/Notes</label>
+                          <div class="col-sm-10">
+                            <input type="text" name="task-comments" class="form-control input-lg" id="task-comments" placeholder="Any Notes?" />
+                          </div>
+                        </div>
+                        <div class="form-group pt-2">
+                          <button class="btn btn-primary" name="AddTask" type="submit"> Add to TODO list</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
