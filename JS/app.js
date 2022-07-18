@@ -1,5 +1,7 @@
 var task_data;
 
+// There will be a modify button for every task that is displayed
+// This method sets up a event listner for all such buttons.
 function setup_modify_event_listner() {
     $(".modify-button").click(function(event) {
         var i = $(this).attr('id').split("_")[1];
@@ -36,6 +38,8 @@ function setup_modify_event_listner() {
     });
 }
 
+// There will be a delete button for every task that is displayed
+// This method sets up a event listner for all such buttons.
 function setup_delete_event_listner() {
     $(".delete-button").click(function(event) {
         var i = $(this).attr('id').split("_")[1];
@@ -57,6 +61,9 @@ function setup_delete_event_listner() {
     });
 }
 
+// This method sets up a event listner for  button in "add-task" page
+// Event listner does a Jquery's ajax call to the api/insert.php which
+// add's the data into the database.
 function setup_add_event_listner(){
   $("#add-task-form").submit(function(event) {
     var $form = $(this);
@@ -81,6 +88,8 @@ function setup_add_event_listner(){
   });
 }
 
+// This method dynamically populates the task table
+// and invokes "DataTable()" method on the table, which does pagination, sort, search.
 function populate_tasklist_table() {
   $('#task-table  > tbody').empty();
     for (var i in task_data) {
@@ -98,6 +107,7 @@ function populate_tasklist_table() {
     $('#task-table').DataTable();
 }
 
+// This method reads the exisiting tasks in DB.
 function load_data_from_db() {
     $.ajax({
         url: "api/read.php",
@@ -112,6 +122,7 @@ function load_data_from_db() {
     });
 }
 
+//Sucess alert pop-up and auto hide.
 function notify_sucess(message){
   $("#task-list-alert-sucess").empty();                                    // clear previous message
   $("#task-list-alert-sucess").append("<strong>"+message+"</strong>");     // addnew message
@@ -120,6 +131,7 @@ function notify_sucess(message){
   });
 }
 
+//Failure alert pop-up and auto hide.
 function notify_failure(message){
   $("#task-list-alert-fail").empty();                                     // clear previous message
   $("#task-list-alert-fail").append("<strong>"+message+"</strong>");      // addnew message
