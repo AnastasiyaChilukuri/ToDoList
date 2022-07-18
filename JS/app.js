@@ -16,7 +16,7 @@ function setup_modify_event_listner() {
         var serializedData = $form.serialize();
         $inputs.prop("disabled", true);
         $.ajax({
-            url: "DB_update.php",
+            url: "api/update.php",
             type: "post",
             data: serializedData,
             success: function(data) {
@@ -41,7 +41,7 @@ function setup_delete_event_listner() {
         var i = $(this).attr('id').split("_")[1];
         var creation_time = "task-creation=" + task_data[i].creation_time;
         $.ajax({
-            url: "DB_delete.php",
+            url: "api/delete.php",
             type: "post",
             data: creation_time,
             success: function(data) {
@@ -64,7 +64,7 @@ function setup_add_event_listner(){
     var serializedData = $form.serialize();
     $inputs.prop("disabled", true);
     $.ajax({
-      url: "DB_insert.php",
+      url: "api/insert.php",
       type: "post",
       data: serializedData,
       success: function(data) {
@@ -100,7 +100,7 @@ function populate_tasklist_table() {
 
 function load_data_from_db() {
     $.ajax({
-        url: "DB_read.php",
+        url: "api/read.php",
         method: "GET",
         success: function(data) {
             task_data = $.parseJSON(data);

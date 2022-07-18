@@ -1,8 +1,5 @@
 <?php
-$servername = "127.0.0.1";
-$username = "root";
-$password = "Anastasiya@123!";
-$dbname = "Todolist";
+include_once '../DB_settings.php';
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -11,16 +8,16 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-echo "came here";
-$creation_time = $_POST['task-creation'];
+
+$creation_time = !empty($_POST['task-creation'])?$_POST['task-creation']:die("To delete an entry, task-creation(time when task is created) is mandatory, but POST['task-creation'] is empty");
 
 $sql = "DELETE FROM tasks  WHERE creation_time = '$creation_time'";
 $result = $conn->query($sql);
 
 if (!$result) {
-    echo "0 results";
+    die("Sql query to insert failed! please retry");
 }
 
-echo " delete sucess";
+echo "Delete sucess";
 $conn->close();
 ?>
